@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./App.css";
-import Universe from "./logic/Universe";
+import Universe from "./Universe.js";
 
-export default class App extends Component {
+export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      universe: new Universe(),
       size: [90, 20],
       gameRunning: false,
+      interval: 100,
     };
 
     this.handleColumnChange = this.handleColumnChange.bind(this);
@@ -46,6 +48,14 @@ export default class App extends Component {
     }
   }
 
+  //   changeInterval = (event) => {
+  //   if(!this.state.gameRunning){
+  //     this.setState({
+  //       interval: event.target.value
+  //     })
+  //   }
+  // }
+
   startGame() {
     if (!this.state.gameRunning) {
       this.setState(
@@ -71,23 +81,21 @@ export default class App extends Component {
       }
     );
   }
-}
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      universe: new Universe(),
-      size: [90, 20],
-      gameRunning: false,
-    }
-    ...
-  }
-
-runGame() {
+  runGame() {
     this.setState({
-      universe: this.state.universe.addGeneration()
-    })
+      universe: this.state.universe.addGeneration(),
+    });
   }
+
+  storeCell(position) {
+    if (!this.state.gameRunning) {
+      this.setState({
+        universe: this.state.universe.storeCell(position),
+      });
+    }
+  }
+
   renderBoard() {
     var newWorld = [];
     var cellRow = [];
@@ -166,20 +174,6 @@ runGame() {
 }
 
 class Cell extends Component {
-  constructor(props) {
-    this.stopGame = this.stopGame.bind(this);
-    this.renderBoard = this.renderBoard.bind(this);
-    this.storeCell = this.storeCell.bind(this);
-  }
-
-  storeCell(position) {
-    if (!this.state.gameRunning) {
-      this.setState({
-        universe: this.state.universe.storeCell(position),
-      });
-    }
-  }
-
   render() {
     return (
       <div

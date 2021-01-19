@@ -54,15 +54,15 @@ export default class Universe {
   }
 
   calculateLiveCellsNeighbors(position) {
-    var liveNeighbors = 0; //This is because initialy we don't know how many live neighbors are there
+    var liveNeighbors = 0; //This is because initially we don't know how many live neighbors are there
 
-    //Here we are going to check the state of all the cells neighbors. This will alow us to apply the rules
+    //Here we are going to check the state of all the cells neighbours. This will allow us to apply the rules
     for (var i = position.x - 1; i <= position.x + 1; i++) {
       for (var j = position.y - 1; j <= position.y + 1; j++) {
         //This is to make sure that we don't check if the cell we are currently analysing is counted has a live cell
         if (i === position.x && j === position.y) continue;
 
-        //if the neighboor is alive we add to the liveNeighbors counter else it goes to the deadCell Map we defined in the constructor
+        //if the neighbour is alive we add to the liveNeighbors counter else it goes to the deadCell Map we defined in the constructor
         if (this.isCellAlive(i + " , " + j)) {
           liveNeighbors++;
         } else {
@@ -71,7 +71,7 @@ export default class Universe {
       }
     }
 
-    //Here we are applying the rules of the game. 2 or 3 live neighbors means that the cell remains alive and lives on to the next generation.
+    //Here we are applying the rules of the game. 2 or 3 live neighbours means that the cell remains alive and lives on to the next generation.
     if (liveNeighbors === 2 || liveNeighbors === 3)
       this.nextGeneration.set(position.x + " , " + position.y, {
         x: position.x,
